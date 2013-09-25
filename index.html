@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <script src="vendor/jquery.min.js" type="text/javascript"></script>
+    <script src="vendor/mqttws31.js" type="text/javascript"></script>
+    <script src="vendor/tween-min.js" type="text/javascript"></script>
+    <script src="vendor/steelseries-min.js" type="text/javascript"></script>
+    <title>Temp</title>
+    <script type="text/javascript">
+	var tempGauge;
+	var client = new Messaging.Client("localhost", 18883,
+				"myclientid_" + parseInt(Math.random() * 100, 10));
+
+	client.onConnectionLost = function (responseObject) {
+		alert("connection lost: " + responseObject.errorMessage);
+	};
+
+	client.onMessageArrived = function (message) {
+		tempGauge.setValue(message.payloadString);
+	};
+
+	var options = {
+		timeout: 3,
+		onSuccess: function () {
+			// alert("Connected");
+			// Connection succeeded; subscribe to our topic
+			client.subscribe('temp/random', {qos: 0});
+		},
+		onFailure: function (message) {
+			alert("Connection failed: " + message.errorMessage);
+		}
+	};
+
+	function init() {
+	    // by @jpmens, Sep 2013
+	    // from @bordignons Sep 2013
+	    // original idea.. http://www.desert-home.com/2013/06/how-to-use-steelseries-gauges-with.html
+	    // with help.. http://harmoniccode.blogspot.com.au/
+	    // and code.. https://github.com/HanSolo/SteelSeries-Canvas
+
+		tempGauge = new steelseries.Radial('gaugeCanvas', {
+			gaugeType: steelseries.GaugeType.TYPE4,
+			minValue:-15,
+			maxValue:50,
+			size: 400,
+			frameDesign: steelseries.FrameDesign.STEEL,
+			knobStyle: steelseries.KnobStyle.STEEL,
+			pointerType: steelseries.PointerType.TYPE6,
+			lcdDecimals: 0,
+			section: null,
+			area: null,
+			titleString: 'Temperature',
+			unitString: 'C',
+			threshold: 100,
+			lcdVisible: true,
+			lcdDecimals: 2
+		   });
+		tempGauge.setValue('');
+
+		/* Connect to MQTT broker */
+		client.connect(options);
+	}
+
+    </script>
+  </head>
+  <body onload="init();">
+       <div>
+       <canvas id=gaugeCanvas width=200 height=200>No canvas in your browser...sorry...</canvas>
+       </div>
+  </body>
+</html>
