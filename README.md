@@ -17,6 +17,10 @@ WSS \
 
 `boom.py` publishes a random temperature to my Mosquitto broker every 0.5s.
 
+## Demo
+
+See it and interact with it [here](http://test.mosquitto.org/gauge/)
+
 
 ## Credits
 
@@ -25,3 +29,4 @@ WSS \
 * [Paho](http://www.eclipse.org/paho/) JavaScript [library](http://git.eclipse.org/c/paho/org.eclipse.paho.mqtt.javascript.git/)
 * [Build your own Javascript MQTT Web Application](http://www.hivemq.com/build-javascript-mqtt-web-application/)
 * [The HTML5 Canvas port of the SteelSeries component library](https://github.com/HanSolo/SteelSeries-Canvas)
+* Thanks to Roger Light for setting up the test site.
