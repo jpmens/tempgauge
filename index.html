@@ -15,6 +15,8 @@
 
 	client.onConnectionLost = function (responseObject) {
 		alert("connection lost: " + responseObject.errorMessage);
+		tempGauge.setLedColor(steelseries.LedColor.RED_LED); //change status LED to RED on broker disconnection 
+
 	};
 
 	client.onMessageArrived = function (message) {
@@ -27,9 +29,13 @@
 			// alert("Connected");
 			// Connection succeeded; subscribe to our topic
 			client.subscribe('temp/random', {qos: 0});
+			tempGauge.setLedColor(steelseries.LedColor.GREEN_LED); //change status LED to GREEN on broker connection
+
 		},
 		onFailure: function (message) {
 			alert("Connection failed: " + message.errorMessage);
+			tempGauge.setLedColor(steelseries.LedColor.RED_LED); //change status LED to RED on broker disconnection 
+
 		}
 	};
 
@@ -57,7 +63,9 @@
 			lcdVisible: true,
 			lcdDecimals: 2
 		   });
-		tempGauge.setValue('');
+		tempGauge.setValue(''); //gives a blank display 'NaN' until broker has connected
+		tempGauge.setLedColor(steelseries.LedColor.RED_LED); //set the LED RED until connected
+
 
 		/* Connect to MQTT broker */
 		client.connect(options);
