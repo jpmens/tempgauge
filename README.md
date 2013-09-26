@@ -24,7 +24,7 @@ See it and interact with it [here](http://test.mosquitto.org/gauge/)
 
 ## Credits
 
-* Inspired by Matthew Bordingdon
+* Inspired by [Matthew Bordignon] (https://twitter.com/bordignon)
 * [WSS](https://github.com/stylpen/WSS/tree/mqtt), a WebSocket to TCP Gateway for MQTT
 * [Paho](http://www.eclipse.org/paho/) JavaScript [library](http://git.eclipse.org/c/paho/org.eclipse.paho.mqtt.javascript.git/)
 * [Build your own Javascript MQTT Web Application](http://www.hivemq.com/build-javascript-mqtt-web-application/)
